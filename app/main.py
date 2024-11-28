@@ -1,8 +1,17 @@
 from fastapi import FastAPI
 from icecream import ic
-from services.generatorQrCode import generate_uuid
-app = FastAPI()
+from fastapi.middleware.cors import CORSMiddleware
 
+from app.services.generatorQrCode import generate_uuid
+
+app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins; specify a list of origins for more control.
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods.
+    allow_headers=["*"],
+    )
 @app.get("/")
 def read_root():
     return {"message": "Hello, FastAPI!"}
