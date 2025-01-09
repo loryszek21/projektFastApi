@@ -1,8 +1,9 @@
+const url  = "http://192.168.100.54:8000/"
 
 async function getData() {
-const url = "http://127.0.0.1:8000/qr";
+const url1 = url+"generate-qr";
 try{
-    const response = await fetch(url);
+    const response = await fetch(url1);
     if(!response.ok){
         throw Error("Response status"+ response.status)
 
@@ -10,11 +11,28 @@ try{
     const data = await response.json();
     console.log("UUID: ", data.uuid);
     generateQr(data.uuid)
+
+    verify()
+
+
 }catch(error){
     console.error(error.message);
 };
 }
 
+async function  verify(){
+    const url1  = url+"verify-qr"
+    try{
+        const response = await fetch(url1);
+        if(!response.ok){
+            throw Error("Response status "+ response.status)
+        }
+        const data = await response.json();
+        console.log(data.info)
+    }catch(error){
+        console.error(error.message)
+    }
+}
 
 function generateQr(uuid){
     const qrDiv = document.getElementById("qrcode");
