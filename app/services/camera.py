@@ -12,7 +12,7 @@ def qr_code_reader():
     picam2.start()
 
     start_time = time.time()
-    duration = 90
+    duration = 65
 
     try:
         while True:
