@@ -2,9 +2,14 @@
 import { useEffect } from "react";
 import QRCode from "qrcode";  
 import ProgressBar from "./ProgressBar";
+import { Button } from "@/components/ui/button"
+import { useState } from "react";
+
 export default function QRCodeGenerator() {
     // const [isLoading, setIsLoading] = useState(false);  // Stan do kontrolowania ładowania
     // const [progress, setProgress] = useState(0); 
+    const [isProgressBarActive, setIsProgressBarActive] = useState(false);
+
     const generateQr = async (uuid) => {
         const qrDiv = document.getElementById("qrcode");
         qrDiv.innerHTML = ""; 
@@ -19,8 +24,8 @@ export default function QRCodeGenerator() {
                 dark: "#000000",  // Kolor ciemny
                 light: "#ffffff", // Kolor tła
             },
-            width: 400,         // Szerokość QR code
-            height: 400,        // Wysokość QR code
+            width: 300,         // Szerokość QR code
+            height: 300,        // Wysokość QR code
             correctLevel: 3,    // Poziom korekcji błędów (3 to H)
         });
         console.log("Wygenerowano kod QR");
@@ -33,7 +38,9 @@ export default function QRCodeGenerator() {
             const data = await response.json();
             console.log("UUID: ", data.uuid);
             generateQr(data.uuid);
-            // verify();
+            verify();
+            setIsProgressBarActive(true);
+
         } catch (error) {
             console.error(error.message);
         }
@@ -51,16 +58,18 @@ export default function QRCodeGenerator() {
     };
 
     return (
-        <div className="centerdiv w-3/4 flex flex-col items-center">
-            <button onClick={getData} className="buttonGetData mb-4">TEST</button>
+        <div className="centerdiv w-3/4 flex flex-col items-center pt-11">
+            {/* <button onClick={getData} className="buttonGetData mb-4">TEST</button> */}
+            <Button variant="outline" onClick={getData}>Wygeneruj swój kod QR do wejścia</Button>
+
             <div className="mt-4 w-full flex flex-col items-center">
                 {/* Kontener dla QR Code */}
-                <div id="qrcode" className=" max-w-full mx-auto mb-4">
+                <div id="qrcode" className=" max-w-xl mx-auto mb-4">
                     {/* Tutaj generowany będzie QR code */}
                 </div>
                 {/* Pasek postępu */}
                 <div className="mt-4 w-full flex flex-col items-center">
-                    <ProgressBar />
+                    <ProgressBar start={isProgressBarActive}/>
                 </div>
             </div>
         </div>

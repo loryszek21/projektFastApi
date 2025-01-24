@@ -3,16 +3,20 @@ from pyzbar.pyzbar import decode
 import cv2
 import numpy as np
 import time
+from icecream import ic 
+
+# from picamera2 import Picamera2Error
 
 def qr_code_reader():
 # Inicjalizacja kamery
+    # picam2.stop()
     picam2 = Picamera2()
     config = picam2.create_preview_configuration(main={"size": (640, 480)})
     picam2.configure(config)
     picam2.start()
 
     start_time = time.time()
-    duration = 65
+    duration = 30
 
     try:
         while True:
@@ -32,7 +36,12 @@ def qr_code_reader():
                 print(f"Odczytano kod QR: {qr_data}")
                 return qr_data
   
+    # except Picamera2Error as e:
+        # print(f"Camera error: {e}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
     finally:
-        # Zatrzymaj kamerę
+        # Ensure the camera stops and resources are cleaned up
+        ic("zwolienie kamery")
         picam2.stop()
         cv2.destroyAllWindows()

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
-
+import Menu from '@/app/components/Menu';
 const PricingPage = () => {
   const plans = [
     {
@@ -58,15 +58,17 @@ const PricingPage = () => {
 
 
   return (
-    <div className='bg-gray-50 py-12 px-4 sm:px-6 lg:py-16 lg:px-8'>
-      <div className='max-w-7xl mx-auto divide-y-2 divide-gray-200'>
+    <>
+    <Menu/>
+    <div className='bg-white py-12 px-4 sm:px-6 lg:py-16 lg:px-8 '>
+      <div className='max-w-full w-full mx-auto divide-y-2 divide-gray-200'>
         <div className='text-center mb-12'>
           <h2 className='text-4xl font-bold text-gray-900'>Wybierz karnet</h2>
           <p className='mt-2 text-base text-gray-500'>Wybór należy do Ciebie od kiedy zaczniesz lepsze życie</p>
         </div>
         <div className='mt-10 grid gap-6 lg:grid-cols-3'>
           {plans.map((plan) => (
-            <div key={plan.name} className={`p-8 border rounded-lg ${plan.theme} ${plan.recommended ? 'ring ring-offset-2 ring-rose-600' : ''}`}>
+            <div key={plan.name} className={`p-8 border rounded-lg ${plan.theme} ${plan.recommended ? 'ring ring-offset-2 ring-rose-200' : ''}`}>
               <h3 className='text-2xl font-bold'>{plan.name}</h3>
               <p className='mt-4 text-xl text-gray-700'>{plan.duration}</p>
               <p className='mt-2 text-3xl font-extrabold'>{plan.price}</p>
@@ -87,6 +89,7 @@ const PricingPage = () => {
         </div>
       </div>
     </div>
+          </>
   );
 };
 
